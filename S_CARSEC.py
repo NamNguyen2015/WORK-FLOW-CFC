@@ -107,7 +107,7 @@ t_h=st.selectbox("tipo de hormigon",options=["kN/m2","t/m2"])
 
 Dict['horm']=st.text_input("hormigon", )
 
-
+#*************************
 # hp
 
 df_hp = pd.DataFrame(
@@ -120,10 +120,11 @@ with st.form(' Contorno Poligonal') as f:
     st.header('Contorno Poligonal')
     response = AgGrid(df_hp, editable=True, fit_columns_on_grid_load=True)
     st.form_submit_button()
+st.write(response['data'])
 
-Dict['punt contorno']=st.write(response['data'])
+Dict['punt contorno']=response['data']
 
-
+#*************************
 # hc
 Dict['hc']=st.selectbox('hc', options=['hc'])
 df_hc = pd.DataFrame(
@@ -136,15 +137,17 @@ with st.form('Punto central') as f:
     st.header('Punto central')
     response = AgGrid(df_hc, editable=True, fit_columns_on_grid_load=True)
     st.form_submit_button()
+st.write(response['data'])
 
-Dict['hc']=st.write(response['data'])
-
+Dict['hc']=response['data']
+#*************************
 
 st.write("* Definicion de acero pasivo:fyk")
 
 t_a=st.selectbox("tipo de armadura",options=["kN/m2","t/m2"])
 Dict['arma']=st.text_input("armadura", )
 
+#*************************
 
 # Caracteristicas
 df_Caracteristicas = pd.DataFrame(
@@ -157,10 +160,11 @@ with st.form('Caracteristicas') as f:
     st.header('Caracteristicas')
     response = AgGrid(df_Caracteristicas, editable=True, fit_columns_on_grid_load=True)
     st.form_submit_button()
+st.write(response['data'])
 
-Dict['punt armadura']=st.write(response['data'])
+Dict['punt armadura']=response['data']
 
-
+#*************************
 st.write("* Calculate of section")
 calc=st.selectbox("Indicate calculation", options=["dibu", "inte"])
 
@@ -168,97 +172,116 @@ calc=st.selectbox("Indicate calculation", options=["dibu", "inte"])
 df_LC = pd.DataFrame(
     '',
     index=range(2),
-    columns=['arma','Punto Inicial', 'Punto Final', 'No Armadura', 'Area']
+    columns=['Axil', 'monento X', 'momento Y']
 )
 
 with st.form('LC') as f:
     st.header('LC')
     response = AgGrid(df_LC, editable=True, fit_columns_on_grid_load=True,use_checkbox=True)
     st.form_submit_button()
+st.write(response['data'])
 
-Dict['calc inte']=st.write(response['data'])
+Dict['calc inte']=response['data']
 
 
 
 #%%
 
+st.subheader("Show the final excel file")
+Dict
+st.write("The file has " + str(len(Dict.keys()))+" sheet_names")
 
-def CARSEC_Writer(Dict,name='CARSEC'):
-    with open(name+'.txt', 'w') as f:
-        f.write('CARSEC'+' \n')
-        f.write('secc '+Dict['secc']+' \n')
-        f.write('unid '+Dict['unid']+' \n')
-        f.write('norm '+Dict['norm']+' \n')
-        f.write('coef horm '+Dict['coef horm']+' arma '+Dict['coef arma'] + ' pret '+Dict['coef pret']+  ' \n')
+option=list(Dict.keys())
 
-
-
+data=st.selectbox("which tab do you want to execute?", option,0)
+   
+st.write(Dict[data])
 
 
-        #f.write('punt '+str(Dict['punt'])+'\n')
-
-
+#%%
 # =============================================================================
 # 
-#         for k in Dict['punt'].keys():
-#             k1=str(Dict['punt'][k][0])
-#             k2=str(Dict['punt'][k][1])
-#             f.write(str(k)+' '+ k1+' ' + k2 +' \n')
+# # =============================================================================
+# # 
+# # def CARSEC_Writer(Dict,name='CARSEC'):
+# #     with open(name+'.txt', 'w') as f:
+# #         f.write('CARSEC'+' \n')
+# #         f.write('secc '+Dict['secc']+' \n')
+# #         f.write('unid '+Dict['unid']+' \n')
+# #         f.write('norm '+Dict['norm']+' \n')
+# #         f.write('coef horm '+Dict['coef horm']+' arma '+Dict['coef arma'] + ' pret '+Dict['coef pret']+  ' \n')
+# # 
+# # 
+# # 
+# # 
+# # 
+# #         f.write('punt '+str(Dict['punt'])+'\n')
+# # 
+# # =============================================================================
+# 
+# # =============================================================================
+# # 
+# #         for k in Dict['punt'].keys():
+# #             k1=str(Dict['punt'][k][0])
+# #             k2=str(Dict['punt'][k][1])
+# #             f.write(str(k)+' '+ k1+' ' + k2 +' \n')
+# #             
+# #             
+# # =============================================================================
 #             
-#             
-# =============================================================================
-            
-        f.write('horm '+Dict['horm']+' \n')
-# =============================================================================
-#         f.write('* punto contorno '+'\n')    
-#         [f.write(str(i)+' ') for i in Dict['punt contorno']] 
+#         f.write('horm '+Dict['horm']+' \n')
+# # =============================================================================
+# #         f.write('* punto contorno '+'\n')    
+# #         [f.write(str(i)+' ') for i in Dict['punt contorno']] 
+# #         f.write('\n')
+# #                  
+# #         f.write('hc ') 
+# #         for k in Dict['hc'].keys():
+# #             k1=str(Dict['hc'][k])          
+# #             f.write( k1 +' ')
+# #         f.write('\n')
+# # =============================================================================
+#         f.write('arma '+Dict['arma']+' \n')
+# # =============================================================================
+# #         for k in Dict['punt armadura'].keys():
+# #             k1=str(Dict['punt armadura'][k])          
+# #             f.write( k1+' ')
+# #         f.write('\n')
+# #         f.write('calc inte'+' \n')
+# #         for k in Dict['calc inte'].keys():
+# #             k1=str(Dict['calc inte'][k])          
+# #             f.write( k1+ ' ')
+# # =============================================================================
 #         f.write('\n')
-#                  
-#         f.write('hc ') 
-#         for k in Dict['hc'].keys():
-#             k1=str(Dict['hc'][k])          
-#             f.write( k1 +' ')
-#         f.write('\n')
-# =============================================================================
-        f.write('arma '+Dict['arma']+' \n')
-# =============================================================================
-#         for k in Dict['punt armadura'].keys():
-#             k1=str(Dict['punt armadura'][k])          
-#             f.write( k1+' ')
-#         f.write('\n')
-#         f.write('calc inte'+' \n')
-#         for k in Dict['calc inte'].keys():
-#             k1=str(Dict['calc inte'][k])          
-#             f.write( k1+ ' ')
-# =============================================================================
-        f.write('\n')
-        f.write('fin')
-                          
-    
-def save_to_json(Dict,name='my_dict'):
-    with open(name+'.json', 'w') as f:
-        json.dump(Dict, f)
-        
-def load_json(path='my_dict.json'):
-    f= open('my_dict.json', 'r')
-    Dict=json.load(f)
-    f.close()
-    return Dict
-
-#%%
-# =============================================================================
-# buffer = io.BytesIO()  
+#         f.write('fin')
+#                           
+#     
+# def save_to_json(Dict,name='my_dict'):
+#     with open(name+'.json', 'w') as f:
+#         json.dump(Dict, f)
+#         
+# def load_json(path='my_dict.json'):
+#     f= open('my_dict.json', 'r')
+#     Dict=json.load(f)
+#     f.close()
+#     return Dict
+# 
+# #%%
+# # =============================================================================
+# # buffer = io.BytesIO()  
 # CARSEC_Writer(Dict, name='CarSec12345')
-# 
-# Download_btn=st.download_button(
-#     label="📥  DOWNLOAD FILE .txt",
-#     data=buffer,
-#     file_name='CarSec12345',
-#     mime='text/txt',
-# )
-# 
-# if Download_btn:
-#     st.success("Excel file is saved")
-# 
+# # 
+# # Download_btn=st.download_button(
+# #     label="📥  DOWNLOAD FILE .txt",
+# #     data=buffer,
+# #     file_name='CarSec12345',
+# #     mime='text/txt',
+# # )
+# # 
+# # if Download_btn:
+# #     st.success("Excel file is saved")
+# # 
+# # 
+# # =============================================================================
 # 
 # =============================================================================

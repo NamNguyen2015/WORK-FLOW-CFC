@@ -5,7 +5,7 @@ Created on Thu Dec  1 12:48:52 2022
 
 @author: namnguyen
 """
-
+X
 
 import numpy as np
 import math

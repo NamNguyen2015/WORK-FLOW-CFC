@@ -13,7 +13,7 @@ def CARSEC_Writer(Dict,name='CARSEC'):
         f.write('secc '+Dict['secc']+' \n')
         f.write('unid '+Dict['unid']+' \n')
         f.write('norm '+Dict['norm']+' \n')
-        f.write('coef horm '+Dict['coef horm']+' arma '+Dict['coef arma'] + ' pret '+Dict['coef pret']+  ' \n')
+        f.write('coef horm '+Dict['coef_horm']+' arma '+Dict['coef_arma'] + ' pret '+Dict['coef_pret']+  ' \n')
 
         f.write('punt '+str(Dict['punt'])+'\n')
         for k in Dict['punt'].keys():
@@ -32,13 +32,13 @@ def CARSEC_Writer(Dict,name='CARSEC'):
             f.write( k1 +' ')
         f.write('\n')
         f.write('arma '+Dict['arma']+' \n')
-        for k in Dict['punt armadura'].keys():
-            k1=str(Dict['punt armadura'][k])          
+        for k in Dict['punt_armadura'].keys():
+            k1=str(Dict['punt_armadura'][k])          
             f.write( k1+' ')
         f.write('\n')
         f.write('calc inte'+' \n')
-        for k in Dict['calc inte'].keys():
-            k1=str(Dict['calc inte'][k])          
+        for k in Dict['calc_inte'].keys():
+            k1=str(Dict['calc_inte'][k])          
             f.write( k1+ ' ')
         f.write('\n')
         f.write('fin')

@@ -9,5 +9,20 @@ Created on Fri Dec  9 11:45:45 2022
 
 import pandas as pd
 
+
                          
-List_keys=['secc', 'unid', 'norm', 'coef horm', 'coef arma','coef pret','punt','horm','punt contorno','hc','arma', 'punt armadura','calc inte']
+List_keys=['secc', 'unid', 'norm', 'coef_horm', 'coef_arma','coef_pret','punt','horm','punt_contorno','hc','arma', 'punt_armadura','calc_inte']
+
+secc: str
+unid: str
+norm:str
+coef_horm: float
+coef_arma: float
+coef_pret: float
+punt: DataFrame
+horm:int
+punt_contorno: DataFrame
+hc: DataFrame
+arma: int
+punt_armadura: DataFrame
+calc_inte: DataFrame
